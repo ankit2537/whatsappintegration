@@ -50,9 +50,7 @@ class SendWhatsappMessage(models.TransientModel):
         base_url = self.get_base_url()
         # gateways = self.env["mail.gateway"].search([("gateway_type", "=", "whatsapp")])
         active_model = self._context.get("active_model")
-        record_id = self.env[self._context.get("active_model")].browse(
-            self._context.get("active_id")
-        )
+        record_id = self.env[active_model].browse(self._context.get("active_id"))
         if active_model == "sale.order":
             gateways = self.env.company.whatsapp_mail_gateway_for_so
         elif active_model == "purchase.order":
@@ -83,7 +81,6 @@ class SendWhatsappMessage(models.TransientModel):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {gateway.token}",
         }
-        print(headers)
         attachment.public = True
         user_mobile_number = self.clean_phone_number(self.partner_id.mobile)
         error = False

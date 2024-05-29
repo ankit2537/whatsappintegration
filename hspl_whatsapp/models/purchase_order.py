@@ -119,6 +119,10 @@ class PurchaseOrder(models.Model):
                                     "text": str(self.currency_id.symbol)
                                     + str(self.amount_total),
                                 },
+                                {
+                                    "type": "text",
+                                    "text": self.date_order.strftime("%d-%m-%y"),
+                                },
                                 {"type": "text", "text": self.env.company.name},
                             ],
                         },
