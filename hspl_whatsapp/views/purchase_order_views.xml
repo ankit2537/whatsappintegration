@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">
+            purchase.order.view.form.inherit.whatsapp
+        </field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//form/header/button[@name='action_rfq_send']"
+                position="after"
+            >
+                <field name="whatsapp_enable_purchase_order" invisible="1" />
+                <button
+                    name="action_send_on_whatsapp"
+                    states="draft"
+                    type="object"
+                    class="oe_highlight"
+                    string="Send on Whatsapp"
+                    icon="fa-whatsapp"
+                    attrs="{'invisible': ['|',('state',  'not in', ['draft']),('whatsapp_enable_purchase_order', '=', False)]}"
+                />
+                <button
+                    name="action_send_on_whatsapp"
+                    type="object"
+                    string="SEND PO ON WHATSAPP"
+                    icon="fa-whatsapp"
+                    attrs="{'invisible': ['|',('state',  'not in', ['sent','purchase']),('whatsapp_enable_purchase_order', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+     <record model="ir.actions.act_window" id="mail_template_purchase_action">
+        <field name="name">Whatsapp Templates for Purchase</field>
+        <field name="res_model">mail.template</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="mail.email_template_tree" />
+        <field name="search_view_id" ref="mail.view_email_template_search" />
+        <field name="domain">[('is_purchase_template','=', True)]</field>
+    </record>
+    <menuitem
+        id="purchase_order_menu"
+        name="Whatsapp Templates"
+        parent="purchase.menu_purchase_config"
+        action="hspl_whatsapp.mail_template_purchase_action"
+        sequence="100"
+    />
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem
+        name="whatsapp"
+        id="menu_whatsapp"
+        web_icon="/hspl_whatsapp/static/description/icon.png"
+        sequence="34"
+    >
+        <menuitem
+            id="menu_hspl_whatsapp_messages"
+            name="Whatsapp Messages"
+            action="action_view_mail_message_hspl_whatsapp"
+        />
+        <menuitem
+            id="menu_hspl_whatsapp_configuration"
+            name="Configuration"
+            sequence="11"
+        >
+            <menuitem
+                id="menu_hspl_whatsapp_config_setting"
+                name="Settings"
+                action="action_hspl_whatsapp_config"
+                sequence="0"
+            />
+            <menuitem
+                id="menu_hspl_whatsapp_config"
+                name="Whatsapp Errors"
+                action="whatsapp_errors_action"
+                sequence="2"
+            />
+            <menuitem
+                id="account_invoicing_menu"
+                name="Whatsapp Configuration"
+                action="hspl_whatsapp_mail_gateway_act_window"
+                sequence="1"
+            />
+        </menuitem>
+    </menuitem>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!--Whatsapp message mail template of purchase order -->
+        <record id="purchase_order_whatsapp_template" model="mail.template">
+            <field name="name">Whatsapp Template for Purchase Order</field>
+            <field name="subject">Purchase Order Template</field>
+            <field name="model_id" ref="purchase.model_purchase_order" />
+            <field name="is_purchase_template">True</field>
+            <field name="body_html">
+                <![CDATA[<div style="font-family: Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                 <div>
+                    Hello *<t t-out="object.partner_id.name or ''"></t>*,
+                 </div>
+                 Thanks for your order! Your document number *<t t-out="object.name"></t>* with the amount of *<t t-out="format_amount(object.amount_total, object.currency_id)"></t>* is processed.
+                    <div>
+                        Your Billing date is <t t-out="object.date_planned.strftime('%d-%m-%y')"></t>
+                    </div>
+                 Regards *<t t-out="object.company_id.name"   or ' '/>*.
+                Thank You.
+        ]]>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.whatsapp</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40" />
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div
+                    class="app_settings_block"
+                    data-string="Whatsapp"
+                    string="Whatsapp"
+                    data-key="hspl_whatsapp"
+                >
+                        <h2>Whatsapp</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="whatsapp_enable_sale_order" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="whatsapp_enable_sale_order" />
+                                    <div class="text-muted">
+                                        A message can be sent on a Sale Order <br
+                                    />when this checkbox is selected.
+                                    </div>
+                                    <div
+                                    class="content-group"
+                                    attrs="{'invisible': [('whatsapp_enable_sale_order', '=', False)]}"
+                                >
+                                        <div class="mt16">
+                                            <label
+                                            for="whatsapp_channal_for_so"
+                                            class="o_light_label"
+                                        />
+                                            <field
+                                            name="whatsapp_channal_for_so"
+                                            class="oe_inline"
+                                            attrs="{'required': [('whatsapp_enable_sale_order', '=', True)]}"
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="whatsapp_enable_account_bill" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="whatsapp_enable_account_bill" />
+                                    <div class="text-muted">
+                                        A message can be sent on a Vendor Bill <br
+                                    />when this checkbox is selected.
+                                    </div>
+                                    <div
+                                    class="content-group"
+                                    attrs="{'invisible': [('whatsapp_enable_account_bill', '=', False)]}"
+                                >
+                                        <div class="mt16">
+                                            <label
+                                            for="whatsapp_channal_for_vb"
+                                            class="o_light_label"
+                                        />
+                                            <field
+                                            name="whatsapp_channal_for_vb"
+                                            class="oe_inline"
+                                            attrs="{'required': [('whatsapp_enable_account_bill', '=', True)]}"
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="whatsapp_enable_purchase_order" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="whatsapp_enable_purchase_order" />
+                                    <div class="text-muted">
+                                        A message can be sent on a Purchase Order <br
+                                    />when this checkbox is selected.
+                                    </div>
+                                    <div
+                                    class="content-group"
+                                    attrs="{'invisible': [('whatsapp_enable_purchase_order', '=', False)]}"
+                                >
+                                        <div class="mt16">
+                                            <label
+                                            for="whatsapp_channal_for_po"
+                                            class="o_light_label"
+                                        />
+                                            <field
+                                            name="whatsapp_channal_for_po"
+                                            class="oe_inline"
+                                            attrs="{'required': [('whatsapp_enable_purchase_order', '=', True)]}"
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="whatsapp_enable_account_invoice" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="whatsapp_enable_account_invoice" />
+                                    <div class="text-muted">
+                                        A message can be sent on a Customer Invoice <br
+                                    />when this checkbox is selected.
+                                    </div>
+                                    <div
+                                    class="content-group"
+                                    attrs="{'invisible': [('whatsapp_enable_account_invoice', '=', False)]}"
+                                >
+                                        <div class="mt16">
+                                            <label
+                                            for="whatsapp_channal_for_ci"
+                                            class="o_light_label"
+                                        />
+                                            <field
+                                            name="whatsapp_channal_for_ci"
+                                            class="oe_inline"
+                                            attrs="{'required': [('whatsapp_enable_account_invoice', '=', True)]}"
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_hspl_whatsapp_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+            name="context"
+        >{'module' : 'hspl_whatsapp', 'bin_size': False}</field>
+        </record>
+</odoo>

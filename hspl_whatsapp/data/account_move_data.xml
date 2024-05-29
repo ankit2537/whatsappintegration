@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!-- Whatsapp message mail template of account move -->
+        <record id="account_move_whatsapp_template" model="mail.template">
+            <field name="name">Whatsapp Template for Invoice</field>
+            <field name="subject">Invoice Template</field>
+            <field name="model_id" ref="account.model_account_move" />
+            <field name="is_invoice_template">True</field>
+            <field name="body_html">
+                <![CDATA[<div style="font-family: Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                <div>
+                    Hello *<t t-out="object.partner_id.name or ''"></t>*,
+                </div>
+                <div>
+                    Please remit payment at your earliest convenience if the invoice has not already been paid. Amount due is *<t t-out="format_amount(object.amount_residual, object.currency_id)"></t>*
+                </div>
+                Regards *<t t-out="object.company_id.name" or ' '/>*.
+                Thank You.
+        ]]>
+            </field>
+        </record>
+</odoo>

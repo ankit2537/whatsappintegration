@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record model="ir.ui.view" id="whatsapp_errors_tree">
+            <field name="name">Whatsapp errors tree</field>
+            <field name="model">whatsapp.errors</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0">
+                    <field name="url" />
+                    <field name="model" />
+                    <field name="record_id" />
+                    <field name="status_code" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="whatsapp_errors_search">
+            <field name="name">Whatsapp errors search</field>
+            <field name="model">whatsapp.errors</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter
+                    string="Success"
+                    domain="[('status','=','success')]"
+                    name="whatsaspp_message_success"
+                />
+                    <separator />
+                    <filter
+                    string="Error"
+                    domain="[('status','=','error')]"
+                    name="whatsaspp_message_error"
+                />
+                    <field name="model" />
+                    <field name="response" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="whatsapp_errors_form">
+            <field name="name">Whatsapp errors form</field>
+            <field name="model">whatsapp.errors</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <sheet>
+                    <group>
+                        <field name="model" />
+                        <field name="record_id" />
+                        <field name="status" />
+                        <field name="url" />
+                        <field name="status_code" />
+                        <field name="request" />
+                        <field name="response" />
+                        <field name="trace_back_error" />
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+</odoo>
