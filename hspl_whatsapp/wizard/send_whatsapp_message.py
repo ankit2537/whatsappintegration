@@ -77,12 +77,13 @@ class SendWhatsappMessage(models.TransientModel):
         active_model_payload_method = active_model.replace(".", "_") + "_payload"
         url = (
             f"https://graph.facebook.com/v{gateway.whatsapp_version}/"
-            f"{gateway.whatsapp_from_phone}/media"
+            f"{gateway.whatsapp_from_phone}/messages"
         )
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {gateway.token}",
         }
+        print(headers)
         attachment.public = True
         user_mobile_number = self.clean_phone_number(self.partner_id.mobile)
         error = False
