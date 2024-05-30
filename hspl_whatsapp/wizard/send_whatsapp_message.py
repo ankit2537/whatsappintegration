@@ -72,6 +72,7 @@ class SendWhatsappMessage(models.TransientModel):
         file_link = base_url + (
             f"/web/content/?model=ir.attachment&id={attachment.id}&download=true"
         )
+        _logger.info(file_link)
         active_model_payload_method = active_model.replace(".", "_") + "_payload"
         url = (
             f"https://graph.facebook.com/v{gateway.whatsapp_version}/"
