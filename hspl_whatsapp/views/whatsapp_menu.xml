@@ -4,7 +4,7 @@
     <menuitem
         name="whatsapp"
         id="menu_whatsapp"
-        web_icon="/hspl_whatsapp/static/description/icon.png"
+        web_icon="hspl_whatsapp,static/description/icon.png"
         sequence="34"
     >
         <menuitem
@@ -25,8 +25,8 @@
             />
             <menuitem
                 id="menu_hspl_whatsapp_config"
-                name="Whatsapp Errors"
-                action="whatsapp_errors_action"
+                name="Whatsapp Logs"
+                action="whatsapp_logs_action"
                 sequence="2"
             />
             <menuitem

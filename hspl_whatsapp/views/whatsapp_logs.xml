@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-        <record model="ir.ui.view" id="whatsapp_errors_tree">
-            <field name="name">Whatsapp errors tree</field>
-            <field name="model">whatsapp.errors</field>
+        <record model="ir.ui.view" id="whatsapp_logs_tree">
+            <field name="name">Whatsapp logs tree</field>
+            <field name="model">whatsapp.logs</field>
             <field name="arch" type="xml">
                 <tree create="0" edit="0">
                     <field name="url" />
@@ -15,9 +15,9 @@
         </record>
 
 
-        <record model="ir.ui.view" id="whatsapp_errors_search">
-            <field name="name">Whatsapp errors search</field>
-            <field name="model">whatsapp.errors</field>
+        <record model="ir.ui.view" id="whatsapp_logs_search">
+            <field name="name">Whatsapp logs search</field>
+            <field name="model">whatsapp.logs</field>
             <field name="arch" type="xml">
                 <search>
                     <filter
@@ -37,9 +37,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="whatsapp_errors_form">
-            <field name="name">Whatsapp errors form</field>
-            <field name="model">whatsapp.errors</field>
+        <record model="ir.ui.view" id="whatsapp_logs_form">
+            <field name="name">Whatsapp logs form</field>
+            <field name="model">whatsapp.logs</field>
             <field name="arch" type="xml">
                 <form create="0" edit="0">
                     <sheet>

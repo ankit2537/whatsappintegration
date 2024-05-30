@@ -91,7 +91,7 @@ class PurchaseOrder(models.Model):
                 "to": user_mobile_number,
                 "type": "template",
                 "template": {
-                    "name": "purchase_order",
+                    "name": "purchase",
                     "language": {"code": "en_US"},
                     "components": [
                         {

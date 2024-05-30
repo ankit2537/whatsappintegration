@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record model="ir.actions.act_window" id="whatsapp_errors_action">
-        <field name="name">Whatsapp Errors</field>
-        <field name="res_model">whatsapp.errors</field>
+    <record model="ir.actions.act_window" id="whatsapp_logs_action">
+        <field name="name">Whatsapp Logs</field>
+        <field name="res_model">whatsapp.logs</field>
         <field name="view_mode">tree,form</field>
     </record>
     <record id="action_view_mail_message_hspl_whatsapp" model="ir.actions.act_window">

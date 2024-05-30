@@ -1,9 +1,9 @@
 from odoo import fields, models
 
 
-class WhatsappErrors(models.Model):
-    _name = "whatsapp.errors"
-    _description = "Whatsapp Errors"
+class WhatsappLogs(models.Model):
+    _name = "whatsapp.logs"
+    _description = "Whatsapp Logs"
     _order = "id desc"
 
     model = fields.Char("Related Document Model")

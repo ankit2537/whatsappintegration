@@ -4,4 +4,5 @@ from . import sale_order
 from . import mail_template
 from . import account_move
 from . import purchase_order
-from . import error
+from . import whatsapp_logs
+from . import mail_gateway

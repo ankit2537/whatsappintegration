@@ -15,12 +15,11 @@
                 <field name="whatsapp_enable_purchase_order" invisible="1" />
                 <button
                     name="action_send_on_whatsapp"
-                    states="draft"
                     type="object"
                     class="oe_highlight"
                     string="Send on Whatsapp"
                     icon="fa-whatsapp"
-                    attrs="{'invisible': ['|',('state',  'not in', ['draft']),('whatsapp_enable_purchase_order', '=', False)]}"
+                    attrs="{'invisible': ['|',('whatsapp_enable_purchase_order', '!=', True),('state',  'not in', ['draft'])]}"
                 />
                 <button
                     name="action_send_on_whatsapp"

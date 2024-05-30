@@ -6,7 +6,6 @@ import traceback
 import requests
 
 from odoo import _, fields, models
-from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -48,9 +47,11 @@ class SendWhatsappMessage(models.TransientModel):
     def action_send_custom_message(self):
         """This function helps to send a message to a user."""
         base_url = self.get_base_url()
-        # gateways = self.env["mail.gateway"].search([("gateway_type", "=", "whatsapp")])
         active_model = self._context.get("active_model")
         record_id = self.env[active_model].browse(self._context.get("active_id"))
+        gateways = self.env["mail.gateway"].search(
+            [("gateway_type", "=", "whatsapp")], limit=1
+        )
         if active_model == "sale.order":
             gateways = self.env.company.whatsapp_mail_gateway_for_so
         elif active_model == "purchase.order":
@@ -66,7 +67,6 @@ class SendWhatsappMessage(models.TransientModel):
             subtype_xmlid="mail.mt_comment",
             message_type="comment",
         )
-        gateway = self.partner_id.gateway_channel_ids.gateway_id
         attachment = self.env["ir.attachment"].browse(self.attachment_ids.ids[0])
 
         file_link = base_url + (
@@ -75,12 +75,12 @@ class SendWhatsappMessage(models.TransientModel):
         _logger.info(file_link)
         active_model_payload_method = active_model.replace(".", "_") + "_payload"
         url = (
-            f"https://graph.facebook.com/v{gateway.whatsapp_version}/"
-            f"{gateway.whatsapp_from_phone}/messages"
+            f"https://graph.facebook.com/v{gateways.whatsapp_version}/"
+            f"{gateways.whatsapp_from_phone}/messages"
         )
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {gateway.token}",
+            "Authorization": f"Bearer {gateways.token}",
         }
         attachment.public = True
         user_mobile_number = self.clean_phone_number(self.partner_id.mobile)
@@ -95,7 +95,7 @@ class SendWhatsappMessage(models.TransientModel):
                 )
                 _logger.info(response.text)
                 if response.status_code == 200:
-                    self.env["whatsapp.errors"].sudo().create(
+                    self.env["whatsapp.logs"].sudo().create(
                         {
                             "model": self._context.get("active_model"),
                             "request": payload,
@@ -107,7 +107,7 @@ class SendWhatsappMessage(models.TransientModel):
                         }
                     )
                 elif response.status_code != 200:
-                    self.env["whatsapp.errors"].sudo().create(
+                    self.env["whatsapp.logs"].sudo().create(
                         {
                             "model": self._context.get("active_model"),
                             "request": payload,
@@ -120,10 +120,24 @@ class SendWhatsappMessage(models.TransientModel):
                     )
                 if json.loads(response.text).get("error"):
                     error = _(json.loads(response.text)["error"]["message"])
+                    if error and self._context.get("error"):
+                        return {
+                            "type": "ir.actions.client",
+                            "tag": "display_notification",
+                            "params": {
+                                "type": "success"
+                                if response.status_code == 200
+                                else "danger",
+                                "message": "Successfully Message sent."
+                                if response.status_code == 200
+                                else error,
+                                "next": {"type": "ir.actions.act_window_close"},
+                            },
+                        }
 
         except Exception:
             traceback_str = traceback.format_exc()
-            self.env["whatsapp.errors"].sudo().create(
+            self.env["whatsapp.logs"].sudo().create(
                 {
                     "model": self._context.get("active_model"),
                     "url": url,
@@ -132,8 +146,6 @@ class SendWhatsappMessage(models.TransientModel):
                     "trace_back_error": traceback_str,
                 }
             )
-        if error and self._context.get("error"):
-            raise ValidationError(error)
 
     def clean_phone_number(self, phone_number):
         """Removes "+" sign and spaces from a phone number."""
