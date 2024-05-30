@@ -84,7 +84,6 @@ class SendWhatsappMessage(models.TransientModel):
         }
         attachment.public = True
         user_mobile_number = self.clean_phone_number(self.partner_id.mobile)
-        error = False
         try:
             if active_model_payload_method:
                 payload = getattr(record_id, active_model_payload_method)(
@@ -94,7 +93,7 @@ class SendWhatsappMessage(models.TransientModel):
                     "POST", url, headers=headers, data=payload, timeout=20
                 )
                 _logger.info(response.text)
-                if response.status_code == 200:
+                if response:
                     self.env["whatsapp.logs"].sudo().create(
                         {
                             "model": self._context.get("active_model"),
@@ -103,37 +102,26 @@ class SendWhatsappMessage(models.TransientModel):
                             "response": json.loads(response.text),
                             "record_id": record_id.id,
                             "status_code": response.status_code,
-                            "status": "success",
+                            "status": "success"
+                            if response.status_code == 200
+                            else "error",
                         }
                     )
-                elif response.status_code != 200:
-                    self.env["whatsapp.logs"].sudo().create(
-                        {
-                            "model": self._context.get("active_model"),
-                            "request": payload,
-                            "url": url,
-                            "response": json.loads(response.text),
-                            "record_id": record_id.id,
-                            "status_code": response.status_code,
-                            "status": "error",
-                        }
-                    )
-                if json.loads(response.text).get("error"):
-                    error = _(json.loads(response.text)["error"]["message"])
-                    if error and self._context.get("error"):
-                        return {
-                            "type": "ir.actions.client",
-                            "tag": "display_notification",
-                            "params": {
-                                "type": "success"
-                                if response.status_code == 200
-                                else "danger",
-                                "message": "Successfully Message sent."
-                                if response.status_code == 200
-                                else error,
-                                "next": {"type": "ir.actions.act_window_close"},
-                            },
-                        }
+                error = _(json.loads(response.text)["error"]["message"])
+                if self._context.get("error"):
+                    return {
+                        "type": "ir.actions.client",
+                        "tag": "display_notification",
+                        "params": {
+                            "type": "success"
+                            if response.status_code == 200
+                            else "danger",
+                            "message": "Successfully Message sent."
+                            if response.status_code == 200
+                            else error,
+                            "next": {"type": "ir.actions.act_window_close"},
+                        },
+                    }
 
         except Exception:
             traceback_str = traceback.format_exc()
